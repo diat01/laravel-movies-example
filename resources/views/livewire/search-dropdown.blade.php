@@ -2,7 +2,7 @@
     <input
         wire:model.debounce.500ms="search"
         type="text"
-        class="bg-gray-800 text-sm rounded-full w-64 px-4 pl-8 py-1 focus:outline-none focus:shadow-outline" placeholder="Search (Press '/' to focus)"
+        class="bg-gray-800 text-sm rounded-full w-64 px-4 pl-8 py-1 focus:outline-none focus:shadow-outline" placeholder="Gözleg..."
         x-ref="search"
         @keydown.window="
             if (event.keyCode === 191) {
@@ -46,7 +46,7 @@
 
                 </ul>
             @else
-                <div class="px-3 py-3">No results for "{{ $search }}"</div>
+                <div class="px-3 py-3">"{{ $search }}" üçin netije ýok</div>
             @endif
         </div>
     @endif
