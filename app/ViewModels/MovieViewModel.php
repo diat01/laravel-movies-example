@@ -2,38 +2,36 @@
 
 namespace App\ViewModels;
 
+use App\Movie;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Spatie\ViewModels\ViewModel;
 
 class MovieViewModel extends ViewModel
 {
-    public array $movie;
+    public Movie $movie;
 
-    public function __construct(array $movie)
+    public function __construct(Movie $movie)
     {
-        $this->movie = $movie;
+        $this->movie = $movie->load('casts', 'media');
     }
 
     public function movie(): Collection
     {
-        return collect($this->movie)->merge([
-            'poster_path'  => $this->movie['poster_path']
-                ? 'https://image.tmdb.org/t/p/w500/' . $this->movie['poster_path']
-                : 'https://via.placeholder.com/500x750',
-            'vote_average' => $this->movie['vote_average'] * 10 . '%',
-            'release_date' => Carbon::parse($this->movie['release_date'])->format('M d, Y'),
-            'genres'       => collect($this->movie['genres'])->pluck('name')->flatten()->implode(', '),
-            'crew'         => collect($this->movie['credits']['crew'])->take(2),
-            'cast'         => collect($this->movie['credits']['cast'])->take(5)->map(fn($cast) => collect($cast)->merge([
-                'profile_path' => $cast['profile_path']
-                    ? 'https://image.tmdb.org/t/p/w300' . $cast['profile_path']
-                    : 'https://via.placeholder.com/300x450',
-            ])),
-            'images'       => collect($this->movie['images']['backdrops'])->take(9),
-        ])->only([
-            'poster_path', 'id', 'genres', 'title', 'vote_average', 'overview', 'release_date', 'credits',
-            'videos', 'images', 'crew', 'cast', 'images'
+        return collect([
+            'poster_path'  => $this->movie->getFirstMediaUrl('posters'),
+            'title'        => $this->movie->title,
+            'overview'     => $this->movie->overview,
+            'vote_average' => $this->movie->vote_average * 10 . '%',
+            'release_date' => Carbon::parse($this->movie->release_date)->format('M d, Y'),
+            'genres'       => collect($this->movie->genres)->pluck('name')->flatten()->implode(', '),
+            'images'       => $this->movie->getMedia('backdrops')->map(fn($backdrop) => $backdrop->getUrl()),
+            'cast'         => $this->movie->casts->map(fn($cast) => [
+                'profile_path' => $cast->actor->getFirstMedia('profile')
+                    ? $cast->actor->getFirstMediaUrl('profile')
+                    : asset('img/placeholder.jpg'),
+                'character'    => $cast->character
+            ])
         ]);
     }
 }

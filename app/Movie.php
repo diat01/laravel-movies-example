@@ -5,11 +5,12 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class Movie extends Model
+class Movie extends Model implements HasMedia
 {
     use HasSlug;
     use InteractsWithMedia;
@@ -19,7 +20,6 @@ class Movie extends Model
     protected $fillable = [
         'id',
         'title',
-        'slug',
         'release_date',
         'vote_average',
         'overview'

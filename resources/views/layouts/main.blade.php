@@ -18,9 +18,6 @@
                 </a>
             </li>
         </ul>
-        <div class="flex flex-col md:flex-row items-center">
-            <livewire:search-dropdown>
-        </div>
     </div>
 </nav>
 @yield('content')

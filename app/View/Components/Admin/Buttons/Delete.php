@@ -1,23 +1,22 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\Admin\Buttons;
 
-use App\Movie;
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-use Illuminate\View\View;
 
-class MovieCard extends Component
+class Delete extends Component
 {
-    public Movie $movie;
+    public string $route;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(Movie $movie)
+    public function __construct(string $route)
     {
-        $this->movie = $movie;
+        $this->route = $route;
     }
 
     /**
@@ -27,6 +26,6 @@ class MovieCard extends Component
      */
     public function render(): View
     {
-        return view('components.movie-card');
+        return view('admin.components.buttons.delete');
     }
 }
