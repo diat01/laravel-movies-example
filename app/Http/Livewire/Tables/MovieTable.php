@@ -28,12 +28,14 @@ class MovieTable extends DataTableComponent
                         : null
                 ),
             Column::make("Ady", "title")
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
             Column::make("Çykan senesi", "release_date")
                 ->sortable(),
             Column::make("Ortaça bahasy", "vote_average")
                 ->sortable(),
-            Column::make("Mazmuny", "overview"),
+            Column::make("Mazmuny", "overview")
+                ->searchable(),
             Column::make("Amallar", "id")
                 ->format(
                     fn($value) => view('admin.components.buttons.delete', [
