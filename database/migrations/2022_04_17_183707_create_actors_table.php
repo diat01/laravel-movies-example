@@ -16,8 +16,7 @@ class CreateActorsTable extends Migration
         Schema::create('actors', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->enum('gender', [1, 2]);
-//            $table->string('profile_path');
+            $table->tinyInteger('gender');
             $table->timestamps();
         });
     }

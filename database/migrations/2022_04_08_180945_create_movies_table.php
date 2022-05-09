@@ -20,8 +20,6 @@ class CreateMoviesTable extends Migration
             $table->date('release_date');
             $table->decimal('vote_average');
             $table->text('overview');
-//            $table->string('poster_path');
-//            $table->string('backdrop_path')->nullable();
             $table->timestamps();
         });
     }
