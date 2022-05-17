@@ -8,6 +8,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreMovieRequest;
 use App\Movie;
 use Exception;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -137,11 +140,11 @@ class MovieController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Movie $movie
-     * @return Response
+     * @return Application|Factory|View
      */
     public function edit(Movie $movie)
     {
-        //
+        return view('admin.movies.edit', compact('movie'));
     }
 
     /**
@@ -149,11 +152,18 @@ class MovieController extends Controller
      *
      * @param Request $request
      * @param Movie $movie
-     * @return Response
+     * @return RedirectResponse
      */
     public function update(Request $request, Movie $movie)
     {
-        //
+        $validated = $request->validate([
+            'title'    => 'required|string',
+            'overview' => 'required|string'
+        ]);
+
+        $movie->update($validated);
+
+        return redirect()->route('admin.dashboard');
     }
 
     /**

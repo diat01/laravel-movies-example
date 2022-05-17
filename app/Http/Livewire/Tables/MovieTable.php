@@ -38,9 +38,12 @@ class MovieTable extends DataTableComponent
                 ->searchable(),
             Column::make("Amallar", "id")
                 ->format(
-                    fn($value) => view('admin.components.buttons.delete', [
-                        'route' => route('admin.movies.destroy', $value)
-                    ])
+                    fn($value) => view('admin.components.buttons.edit', [
+                            'route' => route('admin.movies.edit', $value)
+                        ])
+                        . view('admin.components.buttons.delete', [
+                            'route' => route('admin.movies.destroy', $value)
+                        ])
                 )
                 ->html()
                 ->excludeFromColumnSelect()
