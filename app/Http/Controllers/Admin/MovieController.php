@@ -158,8 +158,14 @@ class MovieController extends Controller
     {
         $validated = $request->validate([
             'title'    => 'required|string',
-            'overview' => 'required|string'
+            'overview' => 'required|string',
+            'video'    => 'nullable|mimes:mp4,ogx,oga,ogv,ogg,webm'
         ]);
+
+        if ($request->hasFile('video')) {
+            $movie->clearMediaCollection('videos');
+            $movie->addMediaFromRequest('video')->toMediaCollection('videos');
+        }
 
         $movie->update($validated);
 

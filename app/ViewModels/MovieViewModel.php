@@ -20,6 +20,7 @@ class MovieViewModel extends ViewModel
     {
         return collect([
             'poster_path'  => $this->movie->getFirstMediaUrl('posters'),
+            'video'        => $this->movie->getFirstMediaUrl('videos'),
             'title'        => $this->movie->title,
             'overview'     => $this->movie->overview,
             'vote_average' => $this->movie->vote_average * 10 . '%',

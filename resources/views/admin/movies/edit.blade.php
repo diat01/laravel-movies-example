@@ -16,7 +16,8 @@
                         </button>
                     </div>
                 @endif
-                <form action="{{ route('admin.movies.update', $movie->id) }}" method="POST">
+                <form action="{{ route('admin.movies.update', $movie->id) }}" method="POST"
+                      enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="row">
@@ -49,6 +50,24 @@
                                           required>{{ old('title', $movie->overview) }}</textarea>
 
                                 @error('overview')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-12 mt-3">
+                            <div class="form-group">
+                                <label for="video" class="form-control-label">
+                                    Wideo
+                                    <span class="text-danger text-sm">*</span>
+                                </label>
+                                <input class="form-control @error('video') is-invalid @enderror" type="file"
+                                       name="video"
+                                       id="video"
+                                       accept="video/*">
+
+                                @error('video')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
