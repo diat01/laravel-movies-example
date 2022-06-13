@@ -14,6 +14,8 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 
 class MovieController extends Controller
 {
@@ -153,6 +155,8 @@ class MovieController extends Controller
      * @param Request $request
      * @param Movie $movie
      * @return RedirectResponse
+     * @throws FileDoesNotExist
+     * @throws FileIsTooBig
      */
     public function update(Request $request, Movie $movie)
     {
